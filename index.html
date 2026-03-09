@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sierra Richey — UX Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FAF8F4;
+      --blush: #EDE4DC;
+      --mist: #D6CECE;
+      --sage: #8FA898;
+      --charcoal: #2E2B28;
+      --warm-gray: #6B6560;
+      --accent: #B07D6B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(250, 248, 244, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(214, 206, 206, 0.4);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      margin-left: 2.5rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%; right: -5%;
+      width: 55vw; height: 85vh;
+      background: radial-gradient(ellipse at top right, #E8DDD6 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 35vw; height: 40vh;
+      background: radial-gradient(ellipse at bottom left, #D8E4DC 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      max-width: 800px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.35s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: var(--warm-gray);
+      max-width: 480px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.65s forwards;
+    }
+
+    .meta-item label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-bottom: 0.3rem;
+    }
+
+    .meta-item span { font-size: 0.9rem; color: var(--warm-gray); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.1s forwards;
+    }
+
+    .scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 7rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    p { font-size: 0.97rem; color: var(--warm-gray); max-width: 640px; margin-bottom: 1.2rem; }
+
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--blush), transparent);
+    }
+
+    /* OVERVIEW CARDS */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: var(--blush);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(214, 206, 206, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(46,43,40,0.07); }
+    .card-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+    .card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.6rem; color: var(--charcoal); }
+    .card p { font-size: 0.88rem; color: var(--warm-gray); margin: 0; max-width: 100%; }
+
+    /* RESEARCH */
+    .process-section {
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: 7rem 4rem;
+    }
+
+    .process-section .section-label { color: var(--sage); }
+    .process-section h2 { color: var(--cream); }
+    .process-section p { color: rgba(250,248,244,0.65); }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .step { border-left: 2px solid var(--sage); padding-left: 1.8rem; padding-top: 0.2rem; }
+    .step-num { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.5rem; }
+    .step h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; color: var(--cream); margin-bottom: 0.6rem; }
+    .step p { font-size: 0.88rem; color: rgba(250,248,244,0.6); max-width: 100%; margin: 0; }
+
+    /* GALLERY */
+    .gallery-section { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .gallery-intro { margin-bottom: 3rem; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      background: var(--blush);
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      border: 1px solid rgba(214,206,206,0.6);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item.tall { grid-row: span 2; aspect-ratio: unset; min-height: 360px; }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 180px;
+    }
+
+    .gallery-placeholder .ph-icon { font-size: 1.8rem; opacity: 0.3; }
+    .gallery-placeholder span { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
+
+    /* OUTCOME */
+    .outcome-section {
+      background: linear-gradient(135deg, #EDE4DC 0%, #E4DEDD 100%);
+      padding: 7rem 4rem;
+    }
+
+    .outcome-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .outcome-highlight {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(46,43,40,0.08);
+    }
+
+    .outcome-highlight .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--accent);
+      opacity: 0.4;
+      margin-bottom: 1rem;
+    }
+
+    .outcome-highlight blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--charcoal);
+      line-height: 1.55;
+      border: none;
+      padding: 0;
+    }
+
+    .outcome-highlight cite {
+      display: block;
+      margin-top: 1.2rem;
+      font-size: 0.75rem;
+      font-style: normal;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--blush);
+    }
+
+    footer p { font-size: 0.82rem; color: var(--mist); margin: 0; max-width: none; }
+    .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--warm-gray); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.8rem; }
+      .nav-links a { margin-left: 1.2rem; font-size: 0.72rem; }
+      .hero, section, .gallery-section { padding: 5rem 1.8rem; }
+      .process-section, .outcome-section, footer { padding: 5rem 1.8rem; }
+      .overview-grid, .process-steps, .gallery-grid { grid-template-columns: 1fr; }
+      .outcome-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-meta { flex-direction: column; gap: 1.2rem; }
+      .gallery-item.tall { grid-row: span 1; min-height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-name" href="#">Sierra Richey</a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#research">Research</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#outcome">Outcome</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-tag">UX Research Case Study</p>
+    <h1>Le Scroll à<br/><em>Sensations</em></h1>
+    <p class="hero-sub">Designing educational tools to help young people in Garges-lès-Gonesse develop critical thinking online, adopt conscious digital habits, and decode the mechanisms of digital manipulation.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <label>Role</label>
+        <span>UX Researcher</span>
+      </div>
+      <div class="meta-item">
+        <label>Context</label>
+        <span>Academic Project — Design School</span>
+      </div>
+      <div class="meta-item">
+        <label>Type</label>
+        <span>New Product Concept</span>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <p class="section-label reveal">The Challenge</p>
+    <h2 class="reveal">How do we teach digital literacy<br/>to young people — experientially?</h2>
+    <p class="reveal">Working with youth in Garges-lès-Gonesse, our team set out to design a tool that didn't just inform — but made young people <em>feel</em> the mechanics of online manipulation, so they could recognise and resist it.</p>
+    <p class="reveal">The research question drove everything: how do we create something that builds genuine cognitive engagement rather than passive consumption?</p>
+
+    <div class="overview-grid">
+      <div class="card reveal">
+        <div class="card-icon">🧠</div>
+        <h3>Critical Thinking</h3>
+        <p>Developing a skeptical, reflective lens toward online content and platform design patterns.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🔍</div>
+        <h3>Conscious Practices</h3>
+        <p>Encouraging mindful digital habits through lived, interactive experience rather than passive instruction.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">⚙️</div>
+        <h3>Decoding Manipulation</h3>
+        <p>Helping users identify and name the specific mechanisms platforms use to capture and hold attention.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- RESEARCH -->
+  <div class="process-section" id="research">
+    <div style="max-width:1100px; margin:0 auto;">
+      <p class="section-label reveal">My Research Process</p>
+      <h2 class="reveal">Evidence-based. Iterative.<br/>Grounded in behavior.</h2>
+      <p class="reveal">My role as UX Researcher shaped the design from hypothesis to final pivot. Here's how the research unfolded.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step reveal">
+        <p class="step-num">01 — Foundation</p>
+        <h3>Literature-Grounded Hypotheses</h3>
+        <p>Defined research questions rooted in developmental psychology literature, forming evidence-based hypotheses to guide feature development from the outset.</p>
+      </div>
+      <div class="step reveal">
+        <p class="step-num">02 — Iteration</p>
+        <h3>Qualitative Research Cycles</h3>
+        <p>Led iterative qualitative research cycles, testing early prototypes and synthesizing behavioral findings across multiple rounds of user observation.</p>
+      </div>
+      <div class="step reveal">
+        <p class="step-num">03 — Observation</p>
+        <h3>Behavioral Analysis</h3>
+        <p>Evaluated task comprehension, recall accuracy, completion time, ergonomics, and interaction breakdowns — translating observations into actionable design adjustments.</p>
+      </div>
+      <div class="step reveal">
+        <p class="step-num">04 — Communication</p>
+        <h3>Research Decks for Partners</h3>
+        <p>Co-developed formal research decks for external partners, leading scientific synthesis and defending design recommendations using cited literature and usability evidence.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-section" id="gallery">
+    <div class="gallery-intro">
+      <p class="section-label reveal">Final Product</p>
+      <h2 class="reveal">The Design in Action</h2>
+      <p class="reveal">Six photos of the final product. To add your photos, upload them to an <code>images/</code> folder in your GitHub repo and swap the <code>src</code> values below (e.g. <code>src="images/photo1.jpg"</code>).</p>
+    </div>
+    <div class="gallery-grid">
+
+      <div class="gallery-item tall reveal">
+        <!-- UPDATE: src="images/photo1.jpg" -->
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🖼</span>
+          <span>Photo 1</span>
+          <span style="font-size:0.6rem;opacity:0.5;">src="images/photo1.jpg"</span>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <!-- UPDATE: src="images/photo2.jpg" -->
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🖼</span><span>Photo 2</span>
+          <span style="font-size:0.6rem;opacity:0.5;">src="images/photo2.jpg"</span>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <!-- UPDATE: src="images/photo3.jpg" -->
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🖼</span><span>Photo 3</span>
+          <span style="font-size:0.6rem;opacity:0.5;">src="images/photo3.jpg"</span>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <!-- UPDATE: src="images/photo4.jpg" -->
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🖼</span><span>Photo 4</span>
+          <span style="font-size:0.6rem;opacity:0.5;">src="images/photo4.jpg"</span>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <!-- UPDATE: src="images/photo5.jpg" -->
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🖼</span><span>Photo 5</span>
+          <span style="font-size:0.6rem;opacity:0.5;">src="images/photo5.jpg"</span>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <!-- UPDATE: src="images/photo6.jpg" -->
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🖼</span><span>Photo 6</span>
+          <span style="font-size:0.6rem;opacity:0.5;">src="images/photo6.jpg"</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OUTCOME -->
+  <div class="outcome-section" id="outcome">
+    <div class="outcome-inner">
+      <div>
+        <p class="section-label reveal">The Outcome</p>
+        <h2 class="reveal">A pivot that changed<br/>everything.</h2>
+        <p class="reveal">Research findings directly drove the most significant design decision of the project: moving away from a simple tactile interaction toward a <strong>timed, memory-based search workflow</strong> that deepened cognitive engagement.</p>
+        <p class="reveal">This wasn't a small adjustment — it was a fundamental rethinking of the core mechanic, championed by research evidence and defended to external partners with scientific rigour.</p>
+      </div>
+      <div class="outcome-highlight reveal">
+        <div class="quote-mark">"</div>
+        <blockquote>
+          Having a direct impact on the final design — and proposing the memory-based challenge that fundamentally changed it — is what I am most proud of.
+        </blockquote>
+        <cite>Sierra Richey — UX Researcher</cite>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-name">Sierra Richey</span>
+    <p>UX Researcher · Portfolio Case Study</p>
+    <p>Built with GitHub Pages</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
