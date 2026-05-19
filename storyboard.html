@@ -12,7 +12,6 @@
       --cream: #FAF8F4;
       --blush: #EDE4DC;
       --mist: #D6CECE;
-      --sage: #8FA898;
       --charcoal: #2E2B28;
       --warm-gray: #6B6560;
       --accent: #B07D6B;
@@ -30,11 +29,12 @@
       overflow-x: hidden;
     }
 
+    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.4rem 4rem;
-      background: rgba(245, 240, 232, 0.9);
+      background: rgba(245, 240, 232, 0.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(214, 206, 206, 0.4);
     }
@@ -73,35 +73,24 @@
     .intro h1 {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2.6rem, 5vw, 4.2rem);
-      font-weight: 300;
-      line-height: 1.12;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.2s forwards;
+      font-weight: 300; line-height: 1.12;
+      opacity: 0; animation: fadeUp 0.9s ease 0.2s forwards;
     }
-
     .intro h1 em { font-style: italic; color: var(--accent); }
 
     .intro-concept {
       margin-top: 2rem;
-      font-size: 0.97rem;
-      color: var(--warm-gray);
-      line-height: 1.85;
-      max-width: 680px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.4s forwards;
+      font-size: 0.97rem; color: var(--warm-gray);
+      line-height: 1.85; max-width: 680px;
+      opacity: 0; animation: fadeUp 0.9s ease 0.4s forwards;
     }
 
     .intro-meta {
-      display: flex;
-      gap: 3rem;
-      margin-top: 2.5rem;
-      padding-top: 2rem;
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      margin-top: 2.5rem; padding-top: 2rem;
       border-top: 1px solid var(--mist);
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.55s forwards;
+      opacity: 0; animation: fadeUp 0.9s ease 0.55s forwards;
     }
-
     .meta-item label {
       display: block; font-size: 0.62rem; font-weight: 500;
       letter-spacing: 0.18em; text-transform: uppercase;
@@ -112,7 +101,7 @@
     /* STORYBOARD */
     .storyboard {
       padding: 5rem 4rem 8rem;
-      max-width: 860px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -122,118 +111,121 @@
       margin-bottom: 4rem;
     }
 
+    /* Each frame: image on left, caption on right, same height */
     .frame {
-      margin-bottom: 5rem;
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      margin-bottom: 0;
+      padding: 3.5rem 0;
+      border-bottom: 1px solid rgba(214, 206, 206, 0.4);
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
+    .frame:first-of-type { padding-top: 0; }
+    .frame:last-of-type { border-bottom: none; }
     .frame.visible { opacity: 1; transform: translateY(0); }
 
-    .frame-image {
+    /* Image box — fixed height, image fills it with object-fit */
+    .frame-image-box {
       width: 100%;
+      height: 340px;
       border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(214, 206, 206, 0.5);
       background: var(--blush);
+      border: 1px solid rgba(214, 206, 206, 0.5);
+      flex-shrink: 0;
     }
 
-    .frame-image img {
+    .frame-image-box img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
       display: block;
     }
 
-    .frame-image-placeholder {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: var(--blush);
-      border-radius: 12px;
-      border: 1px dashed var(--mist);
+    /* Placeholder for missing images */
+    .frame-image-box.placeholder {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
-      color: var(--mist);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      border: 1px dashed var(--mist);
+      background: var(--blush);
+    }
+    .frame-image-box.placeholder span {
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mist);
+    }
+
+    /* Caption sits beside the image */
+    .frame-caption {
+      padding: 0.5rem 0;
+    }
+
+    .frame-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem; font-weight: 300;
+      color: rgba(176, 125, 107, 0.15);
+      line-height: 1;
+      margin-bottom: 0.5rem;
     }
 
     .frame-scene {
       font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.7rem;
     }
 
     .frame-caption h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 400; line-height: 1.3;
-      color: var(--charcoal); margin-bottom: 0.7rem;
+      font-size: 1.55rem; font-weight: 400; line-height: 1.3;
+      color: var(--charcoal); margin-bottom: 0.9rem;
     }
 
     .frame-caption p {
-      font-size: 0.95rem;
-      color: var(--warm-gray);
-      line-height: 1.85;
-      margin: 0;
-      max-width: 680px;
+      font-size: 0.93rem; color: var(--warm-gray);
+      line-height: 1.85; margin: 0;
     }
 
-    .frame-divider {
-      width: 40px; height: 1px;
-      background: var(--mist);
-      margin: 0 0 5rem 0;
-    }
-
-    /* FIGMA */
+    /* FIGMA SECTION */
     .figma-section {
       padding: 5rem 4rem;
       background: var(--charcoal);
       text-align: center;
     }
-
     .figma-section h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 300; color: var(--cream);
-      margin-bottom: 1rem;
+      font-size: 2rem; font-weight: 300; color: var(--cream); margin-bottom: 1rem;
     }
-
     .figma-section p {
-      color: rgba(250,248,244,0.6);
-      font-size: 0.9rem;
-      margin: 0 auto;
-      max-width: 420px;
+      color: rgba(250,248,244,0.6); font-size: 0.9rem;
+      margin: 0 auto; max-width: 420px;
     }
-
     .btn-white {
       display: inline-block;
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--cream);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem; font-weight: 400; letter-spacing: 0.14em;
-      text-transform: uppercase; text-decoration: none;
-      padding: 1rem 2.2rem; border-radius: 2px; margin-top: 2rem;
-      transition: all 0.25s;
+      border: 1px solid rgba(255,255,255,0.3); color: var(--cream);
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 400;
+      letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+      padding: 1rem 2.2rem; border-radius: 2px; margin-top: 2rem; transition: all 0.25s;
     }
     .btn-white:hover { background: rgba(255,255,255,0.1); }
 
+    /* REFERENCE */
     .reference {
       padding: 4rem;
-      max-width: 860px;
+      max-width: 1100px;
       margin: 0 auto;
     }
-
     .reference h4 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1rem; font-weight: 400; color: var(--charcoal); margin-bottom: 0.8rem;
     }
+    .reference p { font-size: 0.82rem; color: var(--warm-gray); line-height: 1.7; margin: 0; }
 
-    .reference p {
-      font-size: 0.82rem; color: var(--warm-gray); max-width: 100%; line-height: 1.7; margin: 0;
-    }
-
+    /* FOOTER */
     footer {
       padding: 3rem 4rem;
       display: flex; justify-content: space-between; align-items: center;
@@ -247,14 +239,21 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 768px) {
+    /* MOBILE */
+    @media (max-width: 900px) {
       nav { padding: 1.2rem 1.8rem; }
       .nav-links a { margin-left: 1.2rem; font-size: 0.72rem; }
       .intro { padding: 7rem 1.8rem 4rem; }
       .storyboard { padding: 4rem 1.8rem 6rem; }
       .reference { padding: 3rem 1.8rem; }
       .figma-section { padding: 4rem 1.8rem; }
-      .intro-meta { gap: 1.5rem; }
+      .frame {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 3rem 0;
+      }
+      .frame-image-box { height: 260px; }
+      .frame-num { font-size: 3rem; }
       footer { padding: 2.5rem 1.8rem; flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
@@ -292,83 +291,84 @@
     <p class="story-label">The Story — 7 Frames</p>
 
     <div class="frame">
-      <div class="frame-image">
-        <img src="images/Storyboard_1.png" alt="Frame 1 — Every day, we face decisions"/>
+      <div class="frame-image-box">
+        <img src="images/Storyboard_1.png" alt="Frame 1 — People at a crossroads, weighing decisions"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 1 — The Setup</p>
+        <div class="frame-num">01</div>
+        <p class="frame-scene">The Setup</p>
         <h3>Every day, we face decisions. Some small. Some that ask us to re-imagine who we are.</h3>
         <p>The stakes are rarely equal, but the weight of uncertainty feels the same.</p>
       </div>
     </div>
 
-    <div class="frame-divider"></div>
-
-    <div class="frame-image">
-      <img src="images/Storyboard_2.png" alt="Frame 2 — Meet Noelle"/> 
+    <div class="frame">
+      <div class="frame-image-box">
+        <img src="images/Storyboard_2.png" alt="Frame 2 — Meet Noelle"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 2 — Meet Noelle</p>
+        <div class="frame-num">02</div>
+        <p class="frame-scene">Meet Noelle</p>
         <h3>She's 29, talented, and stuck.</h3>
         <p>Good at her job but dreaming of something more, she applied to a culinary program in Paris on a whim. She got in. Now she has to actually decide.</p>
       </div>
     </div>
 
-    <div class="frame-divider"></div>
-
-    <div class="frame-image-3">
-      <img src="images/Storyboard_3.png" alt="Frame 3 — The Weight of the Decision"/>
+    <div class="frame">
+      <div class="frame-image-box">
+        <img src="images/Storyboard_3.png" alt="Frame 3 — The spiral"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 3 — The Spiral</p>
+        <div class="frame-num">03</div>
+        <p class="frame-scene">The Spiral</p>
         <h3>The weight of the decision sets in.</h3>
         <p>Noelle spirals through fears of judgment, financial instability, and starting completely from scratch in a city where she knows no one.</p>
       </div>
     </div>
 
-    <div class="frame-divider"></div>
-
-    <div class="frame-image">
-      <img src="images/Storyboard_4.png" alt="Frame 4 — The Discovery"/>
+    <div class="frame">
+      <div class="frame-image-box">
+        <img src="images/Storyboard_4.png" alt="Frame 4 — Noelle searches for clarity"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 4 — The Discovery</p>
+        <div class="frame-num">04</div>
+        <p class="frame-scene">The Discovery</p>
         <h3>Unsure where to turn, Noelle searches for clarity.</h3>
         <p>She finds a structured journaling tool built for moments like this. The first prompt: "What would staying cost you, not financially, but personally?"</p>
       </div>
     </div>
 
-    <div class="frame-divider"></div>
-
-    <div class="frame-image">
-      <img src="images/Storyboard_5.png" alt="Frame 5 — Shift"/>
+    <div class="frame">
+      <div class="frame-image-box">
+        <img src="images/Storyboard_5.png" alt="Frame 5 — The shift"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 5 — The Shift</p>
+        <div class="frame-num">05</div>
+        <p class="frame-scene">The Shift</p>
         <h3>Noelle commits to the prompts. Day by day, something shifts.</h3>
         <p>The evenings get quieter. The spiral slows.</p>
       </div>
     </div>
 
-    <div class="frame-divider"></div>
-
-    <div class="frame-image">
-      <img src="images/Storyboard_6.png" alt="Frame 6 — Turning Point"/>
+    <div class="frame">
+      <div class="frame-image-box">
+        <img src="images/Storyboard_6.png" alt="Frame 6 — The turning point"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 6 — The Turning Point</p>
+        <div class="frame-num">06</div>
+        <p class="frame-scene">The Turning Point</p>
         <h3>Day 5. A sentence that clarifies everything.</h3>
         <p>The prompt is "What would you regret not trying in 5 years?" She writes something that surprises her. She opens her email and types: Accepted.</p>
       </div>
     </div>
 
-    <div class="frame-divider"></div>
-
-    <div class="frame-image">
-      <img src="images/Storyboard_7.png" alt="Frame 7 — Paris"/>
+    <div class="frame">
+      <div class="frame-image-box">
+        <img src="images/Storyboard_7.png" alt="Frame 7 — Noelle in Paris"/>
       </div>
       <div class="frame-caption">
-        <p class="frame-scene">Frame 7 — The Beginning</p>
+        <div class="frame-num">07</div>
+        <p class="frame-scene">The Beginning</p>
         <h3>Noelle is in Paris. The journal is still with her.</h3>
         <p>The tool didn't just help her decide. It's helping her begin. Now a companion for the transition itself, the journaling system continues to support her through the uncertainty of starting over.</p>
       </div>
