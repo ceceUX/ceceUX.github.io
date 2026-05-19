@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dr.Bot / MedScan — Sierra Richey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FAF8F4;
+      --blush: #EDE4DC;
+      --mist: #D6CECE;
+      --sage: #8FA898;
+      --charcoal: #2E2B28;
+      --warm-gray: #6B6560;
+      --accent: #B07D6B;
+      --med-green: #8FA898;
+      --med-light: #D8E4DC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(250, 248, 244, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(214, 206, 206, 0.4);
+    }
+    .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; letter-spacing: 0.04em; color: var(--charcoal); text-decoration: none; }
+    .nav-links a { font-size: 0.8rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; margin-left: 2.5rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 9rem 4rem 5rem;
+      background: linear-gradient(135deg, #2e3f4f 0%, #1f2933 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(46,43,40,0.0) 0%, rgba(46,43,40,0.5) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: #fff; }
+
+    .hero-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.05; color: #fff; opacity: 0; animation: fadeUp 0.9s ease 0.3s forwards; }
+
+    .hero-sub { font-size: 1rem; color: rgba(255,255,255,0.7); margin-top: 1rem; opacity: 0; animation: fadeUp 0.9s ease 0.45s forwards; }
+
+    .hero-meta-row { display: flex; gap: 3rem; margin-top: 2.5rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.6s forwards; }
+    .meta-item label { display: block; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.2rem; }
+    .meta-item span { font-size: 0.88rem; color: rgba(255,255,255,0.8); }
+
+    /* CONTENT */
+    section { padding: 6rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+    .section-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+
+    h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 1.5rem; }
+
+    p { font-size: 0.97rem; color: var(--warm-gray); margin-bottom: 1.2rem; line-height: 1.8; max-width: 680px; }
+
+    .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--blush), transparent); }
+
+    /* GROUP NOTE */
+    .group-note {
+      background: var(--blush);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+      border-left: 3px solid var(--accent);
+      max-width: 680px;
+    }
+    .group-note p { font-size: 0.85rem; font-style: italic; margin: 0; color: var(--warm-gray); }
+
+    /* PERSONAS */
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .persona-card {
+      background: var(--blush);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(214,206,206,0.5);
+    }
+
+    .persona-card .persona-age { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .persona-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.6rem; }
+    .persona-card p { font-size: 0.85rem; margin: 0; max-width: 100%; }
+
+    /* IDEAS */
+    .ideas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .idea-card {
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(214,206,206,0.5);
+      position: relative;
+    }
+
+    .idea-card.selected { background: var(--charcoal); border-color: var(--charcoal); }
+    .idea-card.selected h3 { color: var(--cream); }
+    .idea-card.selected p { color: rgba(250,248,244,0.6); }
+    .idea-card:not(.selected) { background: var(--blush); }
+
+    .idea-card .badge {
+      display: inline-block;
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 1rem;
+    }
+    .idea-card.selected .badge { background: var(--sage); color: var(--cream); }
+    .idea-card:not(.selected) .badge { background: var(--mist); color: var(--warm-gray); }
+
+    .idea-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .idea-card p { font-size: 0.85rem; margin: 0; max-width: 100%; }
+
+    /* ITERATION */
+    .iteration-section {
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: 6rem 4rem;
+    }
+    .iteration-section .section-label { color: var(--med-green); }
+    .iteration-section h2 { color: var(--cream); }
+    .iteration-section p { color: rgba(250,248,244,0.65); }
+
+    .iteration-inner { max-width: 1100px; margin: 0 auto; }
+
+    .iter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+
+    .iter-box {
+      border: 1px solid rgba(250,248,244,0.1);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .iter-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--cream); margin-bottom: 1rem; }
+    .iter-box .iter-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--med-green); margin-bottom: 0.5rem; }
+
+    .feature-list { list-style: none; margin-top: 1rem; }
+    .feature-list li { font-size: 0.88rem; color: rgba(250,248,244,0.65); padding: 0.5rem 0; border-bottom: 1px solid rgba(250,248,244,0.06); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .feature-list li::before { content: '→'; color: var(--med-green); flex-shrink: 0; }
+
+    .eval-list { list-style: none; margin-top: 1rem; }
+    .eval-list li { font-size: 0.88rem; color: rgba(250,248,244,0.65); padding: 0.5rem 0; display: flex; gap: 0.8rem; align-items: flex-start; }
+
+    /* FIGMA EMBED */
+    .embed-section { padding: 6rem 4rem; background: var(--blush); }
+    .embed-inner { max-width: 1100px; margin: 0 auto; }
+    .figma-frame { width: 100%; height: 580px; border: none; border-radius: 12px; margin-top: 2rem; box-shadow: 0 20px 60px rgba(46,43,40,0.1); }
+
+    footer { padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--blush); }
+    footer p { font-size: 0.82rem; color: var(--mist); margin: 0; }
+    .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--warm-gray); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.8rem; }
+      .nav-links a { margin-left: 1.2rem; font-size: 0.72rem; }
+      .hero, section, .embed-section { padding: 5rem 1.8rem; }
+      .iteration-section { padding: 5rem 1.8rem; }
+      .personas-grid, .ideas-grid, .iter-grid { grid-template-columns: 1fr; }
+      .figma-frame { height: 400px; }
+      footer { padding: 2.5rem 1.8rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-name" href="index.html">Sierra Richey</a>
+    <div class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="projects.html">Projects</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <a class="back-link" href="projects.html">← All Projects</a>
+      <p class="hero-tag">IHM · Interaction Design · Group Project</p>
+      <h1>Dr.Bot &<br/>MedScan</h1>
+      <p class="hero-sub">From a physical medication robot to a scalable app — two iterations of an IHM design challenge.</p>
+      <div class="hero-meta-row">
+        <div class="meta-item"><label>Context</label><span>IHM Course — Group Project</span></div>
+        <div class="meta-item"><label>Iterations</label><span>2 (Robot → App)</span></div>
+        <div class="meta-item"><label>Languages</label><span>FR / EN</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section>
+    <p class="section-label reveal">The Challenge</p>
+    <h2 class="reveal">Medication errors are a<br/>design problem.</h2>
+
+    <div class="group-note reveal">
+      <p>Ce projet de groupe a été réalisé dans le cadre d'un cours d'IHM. Suite aux retours du professeur, j'ai intégré ces commentaires en repensant et en concevant une interface de manière autonome.</p>
+    </div>
+
+    <p class="reveal">Two core problems were identified through research into how patients interact with medications:</p>
+    <p class="reveal"><strong>Problem 1:</strong> Some patients struggle to follow medical instructions — for medication schedules or appointment management — leading to missed doses or incorrect treatment.</p>
+    <p class="reveal"><strong>Problem 2:</strong> In some situations, patients can become aggressive or at risk, which complicates care follow-up and endangers the care environment. Staff are not always trained to handle difficult situations.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PERSONAS -->
+  <section>
+    <p class="section-label reveal">User Research</p>
+    <h2 class="reveal">Three personas,<br/>three failure modes.</h2>
+    <div class="personas-grid">
+      <div class="persona-card reveal">
+        <p class="persona-age">16 ans · Étudiant</p>
+        <h3>Evan</h3>
+        <p>Living alone to pursue his studies, Evan forgets medical appointments and doesn't always read dosage instructions — leading to medication errors.</p>
+      </div>
+      <div class="persona-card reveal">
+        <p class="persona-age">27 ans · Project Manager</p>
+        <h3>Julie</h3>
+        <p>Busy and distracted, Julie forgets to put medications back in their boxes. Her children play with them. She often ends up with pills and no packaging or instructions.</p>
+      </div>
+      <div class="persona-card reveal">
+        <p class="persona-age">75 ans · Retraité</p>
+        <h3>Jean-Michel</h3>
+        <p>Retired with Alzheimer's, living alone, he must prepare his medications without help — increasing the risk of errors in his daily treatment.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BRAINSTORM IDEAS -->
+  <section>
+    <p class="section-label reveal">Brainstorming</p>
+    <h2 class="reveal">Three concepts.<br/>One selected.</h2>
+    <div class="ideas-grid">
+      <div class="idea-card selected reveal">
+        <span class="badge">✓ Selected</span>
+        <h3>Dr.Bot</h3>
+        <p>A physical robot designed to assist people with medication. It advises users, analyzes medications visually, and moves to bring help when needed.</p>
+      </div>
+      <div class="idea-card reveal">
+        <span class="badge">Concept</span>
+        <h3>Watch & Take</h3>
+        <p>A touchscreen integrated into each medication box. Forces users to watch an explanatory video before opening — providing instructions and warnings.</p>
+      </div>
+      <div class="idea-card reveal">
+        <span class="badge">Concept</span>
+        <h3>SmartSight</h3>
+        <p>Smart contact lenses capable of scanning medications and displaying precise dosage instructions directly in the user's field of vision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ITERATION 2 -->
+  <div class="iteration-section">
+    <div class="iteration-inner">
+      <p class="section-label">Iteration 2</p>
+      <h2>From robot to app:<br/>MedScan.</h2>
+      <p>After evaluating Dr.Bot, critical limitations emerged — hygiene concerns, accessibility for the hearing-impaired, self-medication risks, and high production costs. The team pivoted to a more feasible and scalable solution.</p>
+
+      <div class="iter-grid">
+        <div class="iter-box reveal">
+          <p class="iter-label">Dr.Bot — Evaluation</p>
+          <h3>Why we pivoted</h3>
+          <ul class="eval-list">
+            <li><span>⚠️</span> Accessibility issues for hearing-impaired users</li>
+            <li><span>⚠️</span> Hygiene concerns with physical medication handling</li>
+            <li><span>⚠️</span> Self-medication risks with an autonomous system</li>
+            <li><span>⚠️</span> Expensive and complex to produce at scale</li>
+          </ul>
+        </div>
+        <div class="iter-box reveal">
+          <p class="iter-label">MedScan — App Features</p>
+          <h3>A scalable alternative</h3>
+          <ul class="feature-list">
+            <li>Medication scanning (OCR / barcode)</li>
+            <li>Tablet and liquid identification</li>
+            <li>Accessible voice mode</li>
+            <li>Automatic synchronized reminders</li>
+            <li>Drug interaction detection</li>
+            <li>Stock tracking and renewal alerts</li>
+            <li>Public database identification</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGMA EMBED -->
+  <div class="embed-section">
+    <div class="embed-inner">
+      <p class="section-label reveal">Design Presentation</p>
+      <h2 class="reveal">The Full IHM Deck</h2>
+      <p class="reveal">Explore the complete project presentation — personas, brainstorming, Dr.Bot design, evaluation, and MedScan pivot.</p>
+      <iframe
+        class="figma-frame reveal"
+        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FMfC1LsWa7dZsw5NRIQqWxL"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-name">Sierra Richey</span>
+    <p>Dr.Bot / MedScan — IHM Interaction Design</p>
+    <p><a href="projects.html" style="color:var(--mist); text-decoration:none;">← Back to Projects</a></p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

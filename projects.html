@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Sierra Richey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FAF8F4;
+      --blush: #EDE4DC;
+      --mist: #D6CECE;
+      --sage: #8FA898;
+      --charcoal: #2E2B28;
+      --warm-gray: #6B6560;
+      --accent: #B07D6B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(250, 248, 244, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(214, 206, 206, 0.4);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      margin-left: 2.5rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .page-header {
+      padding: 10rem 4rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.2s forwards;
+    }
+
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .page-header p {
+      font-size: 1rem;
+      color: var(--warm-gray);
+      max-width: 500px;
+      margin-top: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+
+    /* PROJECT GRID */
+    .projects-grid {
+      padding: 3rem 4rem 8rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .project-card {
+      text-decoration: none;
+      display: block;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--blush);
+      border: 1px solid rgba(214, 206, 206, 0.5);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    .project-card:nth-child(1) { animation-delay: 0.3s; }
+    .project-card:nth-child(2) { animation-delay: 0.45s; }
+    .project-card:nth-child(3) { animation-delay: 0.6s; }
+    .project-card:nth-child(4) { animation-delay: 0.75s; }
+
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(46,43,40,0.1); }
+
+    .card-thumb {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+      background: var(--mist);
+    }
+
+    .card-thumb-placeholder {
+      width: 100%;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+    }
+
+    /* unique thumb colors per project */
+    .thumb-fitcheck { background: linear-gradient(135deg, #FF5FA2 0%, #B8A4FF 50%, #7ED6C2 100%); }
+    .thumb-storyboard { background: linear-gradient(135deg, #EDE4DC 0%, #D6CECE 100%); }
+    .thumb-drbot { background: linear-gradient(135deg, #D8E4DC 0%, #8FA898 100%); }
+    .thumb-scroll { background: linear-gradient(135deg, #2E2B28 0%, #6B6560 100%); }
+
+    .card-body {
+      padding: 1.8rem 2rem 2rem;
+    }
+
+    .card-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .card-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+
+    .card-body p {
+      font-size: 0.88rem;
+      color: var(--warm-gray);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(214, 206, 206, 0.6);
+    }
+
+    .card-roles {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .role-pill {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      border: 1px solid var(--mist);
+      border-radius: 100px;
+      padding: 0.2rem 0.7rem;
+    }
+
+    .card-arrow {
+      font-size: 1rem;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+    .project-card:hover .card-arrow { transform: translateX(4px); }
+
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--blush), transparent);
+    }
+
+    footer {
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--blush);
+    }
+    footer p { font-size: 0.82rem; color: var(--mist); margin: 0; }
+    .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--warm-gray); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.8rem; }
+      .nav-links a { margin-left: 1.2rem; font-size: 0.72rem; }
+      .page-header { padding: 7rem 1.8rem 3rem; }
+      .projects-grid { grid-template-columns: 1fr; padding: 2rem 1.8rem 6rem; }
+      footer { padding: 2.5rem 1.8rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-name" href="index.html">Sierra Richey</a>
+    <div class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="projects.html">Projects</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <p class="section-label">Portfolio</p>
+    <h1>My <em>Projects</em></h1>
+    <p>A collection of work across UX research, interaction design, and applied AI — from concept to prototype.</p>
+  </div>
+
+  <div class="projects-grid">
+
+    <a class="project-card" href="fitcheck.html">
+      <div class="card-thumb-placeholder thumb-fitcheck">👗</div>
+      <div class="card-body">
+        <p class="card-tag">UX Research · AI · Mobile</p>
+        <h2>FitCheck</h2>
+        <p>An AI-powered outfit recommendation app that helps users rediscover their wardrobe — and beat decision fatigue, one outfit at a time.</p>
+        <div class="card-footer">
+          <div class="card-roles">
+            <span class="role-pill">UX Design</span>
+            <span class="role-pill">AI/ML</span>
+            <span class="role-pill">Research</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card" href="storyboard.html">
+      <div class="card-thumb-placeholder thumb-storyboard">📖</div>
+      <div class="card-body">
+        <p class="card-tag">Storyboard · UX Research</p>
+        <h2>The Psychological Cost of Starting Over</h2>
+        <p>A storyboard exploring how structured journaling can help people move through high-stakes life decisions without spiraling.</p>
+        <div class="card-footer">
+          <div class="card-roles">
+            <span class="role-pill">Narrative Design</span>
+            <span class="role-pill">UX Research</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card" href="drbot.html">
+      <div class="card-thumb-placeholder thumb-drbot">🤖</div>
+      <div class="card-body">
+        <p class="card-tag">IHM · Group Project</p>
+        <h2>Dr.Bot / MedScan</h2>
+        <p>From a physical medication robot to a scalable app — a two-iteration IHM project redesigning how people interact with their medications.</p>
+        <div class="card-footer">
+          <div class="card-roles">
+            <span class="role-pill">Interaction Design</span>
+            <span class="role-pill">Prototyping</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card" href="scroll.html">
+      <div class="card-thumb-placeholder thumb-scroll">📱</div>
+      <div class="card-body">
+        <p class="card-tag">UX Research · Education</p>
+        <h2>Le Scroll à Sensations</h2>
+        <p>Designing educational tools to help young people in Garges-lès-Gonesse develop critical thinking and resist digital manipulation.</p>
+        <div class="card-footer">
+          <div class="card-roles">
+            <span class="role-pill">UX Research</span>
+            <span class="role-pill">Education</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <span class="footer-name">Sierra Richey</span>
+    <p>UX Researcher · Designer · Cognitive Science</p>
+    <p>Built with GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
