@@ -343,7 +343,9 @@
   <section>
     <p class="section-label reveal">The Problem</p>
     <h2 class="reveal">A full closet that<br/>feels completely empty.</h2>
-    <p class="reveal">People have wardrobes full of clothes and still feel like they have nothing to wear. This isn't a scarcity problem — it's a cognitive one. Decision fatigue, choice overload, and wardrobe blindness conspire to make getting dressed harder than it should be.</p>
+    <p class="reveal">People have wardrobes full of clothes and still feel like they have nothing to wear. 
+     This is not a scarcity problem. It is a cognitive one. 
+      Decision fatigue, choice overload, and wardrobe blindness make getting dressed harder than it should be</p>
 
     <div class="lit-callout reveal">
       <p>Individuals who encounter a large number of options have difficulty making decisions, their satisfaction levels decrease, and they may postpone decisions entirely.</p>
@@ -351,7 +353,9 @@
     </div>
 
     <p class="reveal"><strong>Problem 1 — The Combination Gap:</strong> Users struggle to remix what they own. When pressed for time, they default to familiar outfits rather than experimenting.</p>
-    <p class="reveal"><strong>Problem 2 — Wardrobe Blindness:</strong> Users lose track of what they own. Items get buried, forgotten, or never worn again — leading to unnecessary purchases and a paradoxically empty-feeling closet.</p>
+    <p class="reveal"><strong>Problem 2 — Wardrobe Blindness:</strong> 
+      Users lose track of what they own. Items get buried, forgotten, or never worn again. 
+      This can lead to unnecessary purchases and a growing closet that paradoxically feels empty.</p>
 
     <p class="reveal" style="font-style:italic; margin-top: 1.5rem; color: var(--accent);">How might we help users discover new outfit combinations from their existing wardrobe, so they spend less time searching and more time actually getting dressed?</p>
 
@@ -375,42 +379,48 @@
     <div style="max-width:1100px; margin: 0 auto;">
       <p class="section-label">My Process</p>
       <h2>From research to<br/>a working model.</h2>
-      <p>I built and trained a real AI compatibility scorer — not just a prototype concept, but a system trained on real clothing data.</p>
+      <p>I built and trained an AI-based compatibility scoring system using real clothing data. 
+        I moved beyond a simple concept and turned it into a working model. </p>
     </div>
     <div class="steps-list">
       <div class="step-item reveal">
         <div class="step-num">01</div>
         <div class="step-content">
           <h3>Find & Test a Model</h3>
-          <p>I selected OpenAI's CLIP model — a pre-trained vision-language model that understands clothing images and text descriptions. I tested it with a clothing item to confirm it could recognize garments, even with low confidence on ambiguous pieces.</p>
+          <p>I selected OpenAI's CLIP model — a pre-trained vision-language model that understands clothing images and text descriptions.
+            I tested it with a clothing item to confirm it could recognize garments</p>
         </div>
       </div>
       <div class="step-item reveal">
         <div class="step-num">02</div>
         <div class="step-content">
           <h3>Build a Dataset</h3>
-          <p>I photographed clothing items against plain backgrounds, labeled each piece, and created outfit pairing spreadsheets — marking compatible combinations (1) and incompatible ones (0). Final dataset: <strong>116 images, 210 outfit pairings</strong>.</p>
+          <p>I photographed clothing items, labeled each piece, and created an outfit pairing spreadsheet. Compatible combinations were marked 1 and incompatible ones 0. Final dataset: <strong>116 images, 210 outfit pairings</strong>.</p>
         </div>
       </div>
       <div class="step-item reveal">
         <div class="step-num">03</div>
         <div class="step-content">
           <h3>Train the Compatibility Scorer</h3>
-          <p>Images were converted into embeddings — numerical representations of each item's visual features. The outfit pairs spreadsheet was then used to train a compatibility model. 80% of data for training, 20% for testing.</p>
+          <p>Images were converted into embeddings. 
+            The outfit pairs spreadsheet was then used to train a compatibility model. 
+            80% of data was used for training and 20% for testing.</p>
         </div>
       </div>
       <div class="step-item reveal">
         <div class="step-num">04</div>
         <div class="step-content">
           <h3>Test & Evaluate</h3>
-          <p>The model correctly predicted <strong>35 out of 42 outfit combinations it had never seen before</strong> — an accuracy rate that validated the approach and opened the door to UI integration.</p>
+          <p>The model correctly predicted <strong>37 out of 42 outfit combinations it had never seen before</strong>. This was an accuracy rate that validated the approach and opened the door to UI integration.</p>
         </div>
       </div>
       <div class="step-item reveal">
         <div class="step-num">05</div>
         <div class="step-content">
           <h3>Design the UI</h3>
-          <p>With the AI logic validated, I designed the full app experience in Figma — incorporating the brand palette and a tinder-style outfit approval flow that keeps the interaction playful and low-friction.</p>
+          <p>I designed feature-level mockups in Figma, 
+            incorporating the brand palette and a like/reject interaction that 
+            lets the system continue learning style preferences while keeping the experience simple and low-friction.</p>
         </div>
       </div>
     </div>
@@ -424,7 +434,7 @@
       <div class="insight-card reveal">
         <div class="icon">🤝</div>
         <h3>Trust is Critical</h3>
-        <p>Only 41% of survey participants felt comfortable using an AI-powered outfit recommender — highlighting the importance of transparency and user control in the design.</p>
+        <p>Only 41% of survey participants felt comfortable using an AI-powered outfit recommender. This highlights the importance of transparency and user control in the design.</p>
       </div>
       <div class="insight-card reveal">
         <div class="icon">📸</div>
@@ -434,7 +444,7 @@
       <div class="insight-card reveal">
         <div class="icon">🔄</div>
         <h3>AI Improves Over Time</h3>
-        <p>Recommendations become more accurate with user feedback and behavior data — the more someone uses the app, the more personalized the suggestions become.</p>
+        <p>Recommendations become more accurate with user feedback and behavior data. The more someone uses the app, the more personalized the suggestions become.</p>
       </div>
     </div>
   </section>
